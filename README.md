@@ -1,2 +1,2 @@
 # 2piQA
-package testing
+package testing framework
