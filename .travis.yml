@@ -38,8 +38,10 @@ install:
 
 # run checks
 script:
-  - (cd R/PkgSnippets/dse ; ls)
-  - (cd R/PkgSnippets/dse ; ls -l)
+  - (cd R/PkgSnippets/dse ; date ; ls -l)
+  - (cd R/PkgSnippets/dse/1stSnippetTest ; Rscript fails1.R >fails1.Rout )
+  - (cd R/PkgSnippets/dse/1stSnippetTest ; for f in `ls *.R` ; do Rscript $f >$fout ; done)
+  - (cd R/PkgSnippets/dse ; date ; ls -l)
 
 #after_success:
 #  - Rscript -e 'do something")'
