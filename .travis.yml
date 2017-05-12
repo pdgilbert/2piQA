@@ -39,6 +39,7 @@ install:
 # run checks
 script:
   - (cd R/PkgSnippets/dse ; ls)
+  - (cd R/PkgSnippets/dse ; ls -l)
 
 #after_success:
 #  - Rscript -e 'do something")'
