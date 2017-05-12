@@ -1,0 +1,20 @@
+#!/bin/bash
+# run all tests in a pkg/snippet dir
+#  eg
+#     ./SnippetTest  dse  1stSnippetTest
+
+#set -e to stop on error?
+
+cd PkgSnippets/$1/$2
+
+for f in `ls *.[rR]` ; do
+    Rscript ${f} >${f}out 2>&1;
+    x=$?
+    echo x is $x ;
+    if [ 0 -eq $x ]  ; then  echo -n " passed." >${f}status  ; \
+	                else echo -n " failed." >${f}status  ;fi ;
+    done
+
+# @echo " $(PAC)-$(PAC-VERSION) $(RVERSION) $(shell date) ON  $(shell uname --all)" >>$@.tmp 
+
+exit 0
