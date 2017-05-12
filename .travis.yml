@@ -1,0 +1,50 @@
+# using suggestions from:
+#   github.com/jtilly/R-travis-container-example/blob/master/.travis.yml
+#   kieranhealy.org/blog/archives/2015/10/16/using-containerized-travis-ci-to-check-r-in-rmarkdown-files/
+#   gist.github.com/willprice/e07efd73fb7f13f917ea
+
+language: c
+
+# use containers (so no sudo)
+sudo: false
+
+# trigger on pushes to master branch
+branches:
+  only:
+   - master
+
+# really would prefer r lang pre-installed with all packages here
+# install R: use r-packages-precise (https://cran.r-project.org/bin/linux/ubuntu/precise/) 
+# as source which is white listed (https://github.com/travis-ci/apt-source-whitelist/)
+addons:
+  apt:
+    sources:
+    - r-packages-precise
+    packages:
+    - r-base-dev	
+    - r-recommended
+
+# cache local R libraries directory:
+cache:
+  directories:
+    - ~/Rlib
+
+# - install package with dependencies
+install:
+  - mkdir -p ~/Rlib
+  - echo 'R_LIBS=~/Rlib' > .Renviron
+  - echo 'options(repos = "http://cran.r-project.org")' > .Rprofile
+  - Rscript -e 'if(!"dse" %in% rownames(installed.packages())) { install.packages("dse", dependencies = TRUE) }'
+
+# run checks
+script:
+  - (cd R/PkgSnippets/dse ; ls)
+
+#after_success:
+#  - Rscript -e 'do something")'
+
+# send e-mails on changes
+#notifications:
+#  email:
+#    on_success: change
+#    on_failure: change
