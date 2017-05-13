@@ -5,14 +5,14 @@
 
 #set -e to stop on error?
 
-CHK=$(echo ${CHANGE} | cut -f2 -d/)
-PKG=$(echo ${CHANGE} | cut -f3 -d/)
-SNP=$(echo ${CHANGE} | cut -f4 -d/)
+CHK=$(echo $1 | cut -f2 -d/)
+PKG=$(echo $1 | cut -f3 -d/)
+SNP=$(echo $1 | cut -f4 -d/)
 
-echo ${CHK} ${PKG} ${SNP} 
+echo running SnippetTest for ${CHK}/${PKG}/${SNP} 
 
 # only run for snippet changes ( but should run for package version change and R version change )
-if [ ${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
+if [ ""${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
 
 cd ${CHK}/${PKG}/${SNP}
 
