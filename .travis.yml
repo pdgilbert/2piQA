@@ -38,6 +38,13 @@ install:
 
 # run checks
 script:
+  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
+  - echo TRAVIS_COMMIT_MESSAGE is ${TRAVIS_COMMIT_MESSAGE}
+  - echo TRAVIS_COMMIT_RANGE is ${TRAVIS_COMMIT_RANGE}
+  - echo TRAVIS_EVENT_TYPE is ${TRAVIS_EVENT_TYPE}
+  - echo TRAVIS_BRANCH is ${TRAVIS_BRANCH}
+  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
+  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
   - (cd R/ ; ./SnippetTest  dse  1stSnippetTest )
   - (cd R/PkgSnippets/dse/1stSnippetTest ; date ; ls -l)
 
