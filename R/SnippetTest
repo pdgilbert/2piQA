@@ -10,11 +10,19 @@ cd PkgSnippets/$1/$2
 for f in `ls *.[rR]` ; do
     Rscript ${f} >${f}out 2>&1;
     x=$?
-    echo x is $x ;
+    echo ${f} exit code $x ;
     if [ 0 -eq $x ]  ; then  echo -n " passed." >${f}status  ; \
 	                else echo -n " failed." >${f}status  ;fi ;
     done
 
+OS_TAG=`uname -i`_`uname -o`_`uname -r`
+OS_TAG=${OS_TAG////-}  # rm / from name for file
+
+
+egrep --with-filename '(passed|failed)' *status  >STATUS_SUMMARY_${OS_TAG}
+
+# more complicated senarios may need something like
+#egrep --with-filename '(passed|failed)' *status | perl -ane "print qq(@F[0,1]\n)" >STATUS_SUMMARY_${OS_TAG}
 # @echo " $(PAC)-$(PAC-VERSION) $(RVERSION) $(shell date) ON  $(shell uname --all)" >>$@.tmp 
 
 exit 0
