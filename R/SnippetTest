@@ -1,11 +1,20 @@
 #!/bin/bash
 # run all tests in a pkg/snippet dir
 #  eg
-#     ./SnippetTest  dse  1stSnippetTest
+#     ./SnippetTest  PkgSnippets/dse/1stSnippetTest
 
 #set -e to stop on error?
 
-cd PkgSnippets/$1/$2
+CHK=$(echo ${CHANGE} | cut -f2 -d/)
+PKG=$(echo ${CHANGE} | cut -f3 -d/)
+SNP=$(echo ${CHANGE} | cut -f4 -d/)
+
+echo ${CHK} ${PKG} ${SNP} 
+
+# only run for snippet changes ( but should run for package version change and R version change )
+if [ ${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
+
+cd ${CHK}/${PKG}/${SNP}
 
 for f in `ls *.[rR]` ; do
     Rscript ${f} >${f}out 2>&1;
