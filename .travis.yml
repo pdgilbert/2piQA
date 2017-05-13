@@ -39,17 +39,25 @@ install:
 # run checks
 script:
   - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
-  - echo TRAVIS_COMMIT_MESSAGE is ${TRAVIS_COMMIT_MESSAGE}
-  - echo TRAVIS_COMMIT_RANGE is ${TRAVIS_COMMIT_RANGE}
-  - echo TRAVIS_EVENT_TYPE is ${TRAVIS_EVENT_TYPE}
-  - echo TRAVIS_BRANCH is ${TRAVIS_BRANCH}
+#  - echo TRAVIS_COMMIT_MESSAGE is ${TRAVIS_COMMIT_MESSAGE}
+#  - echo TRAVIS_COMMIT_RANGE is ${TRAVIS_COMMIT_RANGE}
+#  - echo TRAVIS_EVENT_TYPE is ${TRAVIS_EVENT_TYPE}
+#  - echo TRAVIS_BRANCH is ${TRAVIS_BRANCH}
   - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
   - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
-  - git log --oneline  -1
-  - git  show  --name-only  ${TRAVIS_COMMIT}
+#  - git log --oneline  -1
+#  - git  show  --name-only  ${TRAVIS_COMMIT}
   - CHANGE=`git  show  --name-only  ${TRAVIS_COMMIT} | tail -1`
   - echo CHANGE is ${CHANGE}
-#  - (cd R/ ; ./SnippetTest  dse  1stSnippetTest )
+  - CHANGE=R/PkgSnippets/dse/1stSnippetTest/fails1.R
+  - echo CHANGE is ${CHANGE}
+  - CHK=$(echo ${CHANGE} | cut -f2 -d/)
+  - PKG=$(echo ${CHANGE} | cut -f3 -d/)
+  - SNP=$(echo ${CHANGE} | cut -f4 -d/)
+  - echo ${CHK} ${PKG} ${SNP} 
+# only run for snippet changes ( but should run for package version change 
+  - if [ ${CHK} = "PkgSnippets" ] ; then (cd R/ ; ./SnippetTest ${PKG} ${SNP} ) ; fi
+
   - (cd R/PkgSnippets/dse/1stSnippetTest ; date ; ls -l)
 
 #after_success:
