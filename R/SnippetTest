@@ -1,7 +1,7 @@
 #!/bin/bash
 # run all tests in a pkg/snippet dir
 #  eg
-#     ./SnippetTest  PkgSnippets/dse/1stSnippetTest
+#     ./SnippetTest  R/PkgSnippets/dse/1stSnippetTest
 
 #set -e to stop on error?
 
@@ -33,5 +33,10 @@ egrep --with-filename '(passed|failed)' *status  >STATUS_SUMMARY_${OS_TAG}
 # more complicated senarios may need something like
 #egrep --with-filename '(passed|failed)' *status | perl -ane "print qq(@F[0,1]\n)" >STATUS_SUMMARY_${OS_TAG}
 # @echo " $(PAC)-$(PAC-VERSION) $(RVERSION) $(shell date) ON  $(shell uname --all)" >>$@.tmp 
+
+git status
+git add   STATUS_SUMMARY_${OS_TAG}
+git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
+git status
 
 exit 0

@@ -38,19 +38,17 @@ install:
 
 # run checks
 script:
-  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
-  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
-  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
+#  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
+#  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
+#  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
   - CHANGE=`git  show  --name-only  ${TRAVIS_COMMIT} | tail -1`
-  - echo CHANGE is ${CHANGE}
-  - CHANGE=R/PkgSnippets/dse/1stSnippetTest/fails1.R
-  - echo CHANGE is ${CHANGE}
-  - (cd R/ ; ./SnippetTest ${CHANGE} )
+  - CHANGE=R/PkgSnippets/dse/1stSnippetTest/fail1.R
 
-  - (cd R/PkgSnippets/dse/1stSnippetTest ; date ; ls -l)
+  - (cd R/ ; ./SnippetTest ${CHANGE} )
 
 #after_success:
 #  - Rscript -e 'do something")'
+  - (cd R/PkgSnippets/dse/1stSnippetTest ; date ; ls -l)
 
 # send e-mails on changes
 #notifications:
