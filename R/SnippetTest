@@ -16,6 +16,7 @@ OS_TAG=${OS_TAG////-}  # rm / from name for file
 # echo -n `uname -r` >kernel_${OS_TAG}
 
 echo running SnippetTest for ${CHK}/${PKG}/${SNP} 
+echo OS_TAG is ${OS_TAG} 
 
 # only run for snippet changes ( but should run for package version change and R version change )
 if [ ""${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
