@@ -38,10 +38,12 @@ install:
 
 # run checks
 script:
-#  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
-#  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
-#  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
+  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
+  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
+  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
+  - git  show  --name-only  ${TRAVIS_COMMIT}
   - CHANGE=`git  show  --name-only  ${TRAVIS_COMMIT} | tail -1`
+  - echo CHANGE would be ${CHANGE}
   - CHANGE=R/PkgSnippets/dse/1stSnippetTest/fail1.R
 
   - (cd R/ ; ./SnippetTest ${CHANGE} )
