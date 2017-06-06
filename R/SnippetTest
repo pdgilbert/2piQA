@@ -3,6 +3,9 @@
 #  eg  (Beware this does a git commit)
 #     ./SnippetTest  R/PkgSnippets/dse/1stSnippetTest
 
+git config --global user.email "travis@travis-ci.org"
+git config --global user.name "Travis CI"
+
 #set -e to stop on error?
 
 CHK=$(echo $1 | cut -f2 -d/)
@@ -29,16 +32,15 @@ for f in `ls *.[rR]` ; do
     Rscript ${f} >${f}out_${OS_TAG} 2>&1;
     x=$?
     echo ${f} exit code $x ;
+    git add   ${f}out_${OS_TAG} ;
     if [ 0 -eq $x ]  ; \
      then echo -n ${f}": passed." >>STATUS_SUMMARY_${OS_TAG}  ; \
      else echo -n ${f}": failed." >>STATUS_SUMMARY_${OS_TAG}  ;fi ;
     done
 
-git config --global user.email "travis@travis-ci.org"
-git config --global user.name "Travis CI"
+git add   STATUS_SUMMARY_${OS_TAG}
 
 git status
-git add   *_${OS_TAG}
 git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
 git status
 

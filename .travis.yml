@@ -43,7 +43,7 @@ script:
 #  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
   - git  show  --name-only  ${TRAVIS_COMMIT}
 #  - CHANGE=`git  show  --name-only  ${TRAVIS_COMMIT} | tail -1`
-  - CHANGE=`git  show  --name-only  ${TRAVIS_COMMIT}`
+  - CHANGE=`git diff-tree --no-commit-id --name-only -r ${TRAVIS_COMMIT}`
   - echo CHANGE would be ${CHANGE}
   - CHANGE='R/PkgSnippets/dse/1stSnippetTest/fail1.R R/PkgSnippets/dse/2ndSnippetTest/SnippetDescription.txt'
   - echo CHANGE is ${CHANGE}
