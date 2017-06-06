@@ -38,15 +38,18 @@ install:
 
 # run checks
 script:
-  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
-  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
-  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
+#  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
+#  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
+#  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
   - git  show  --name-only  ${TRAVIS_COMMIT}
-  - CHANGE=`git  show  --name-only  ${TRAVIS_COMMIT} | tail -1`
+#  - CHANGE=`git  show  --name-only  ${TRAVIS_COMMIT} | tail -1`
+  - CHANGE=`git  show  --name-only  ${TRAVIS_COMMIT}`
   - echo CHANGE would be ${CHANGE}
-  - CHANGE=R/PkgSnippets/dse/1stSnippetTest/fail1.R
+  - CHANGE='R/PkgSnippets/dse/1stSnippetTest/fail1.R R/PkgSnippets/dse/2ndSnippetTest/SnippetDescription.txt'
+  - echo CHANGE is ${CHANGE}
 
-  - (cd R/ ; ./SnippetTest ${CHANGE} )
+# for loop here is for case of changes in multiple snippet dirs
+  - (cd R/ ; for f in $CHANGE ; do ./SnippetTest ${f} ; done )
 
 #after_success:
 #  - Rscript -e 'do something")'
