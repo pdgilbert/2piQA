@@ -1,6 +1,6 @@
 #!/bin/bash
 # run all tests in a pkg/snippet dir
-#  eg
+#  eg  (Beware this does a git commit)
 #     ./SnippetTest  R/PkgSnippets/dse/1stSnippetTest
 
 #set -e to stop on error?
@@ -9,6 +9,12 @@ CHK=$(echo $1 | cut -f2 -d/)
 PKG=$(echo $1 | cut -f3 -d/)
 SNP=$(echo $1 | cut -f4 -d/)
 
+OS_TAG=`uname -i`_`uname -o`
+OS_TAG=${OS_TAG////-}  # rm / from name for file
+
+# recording kernel with OS_TAG will eventually generate too many files, consider
+# echo -n `uname -r` >kernel_${OS_TAG}
+
 echo running SnippetTest for ${CHK}/${PKG}/${SNP} 
 
 # only run for snippet changes ( but should run for package version change and R version change )
@@ -16,27 +22,33 @@ if [ ""${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
 
 cd ${CHK}/${PKG}/${SNP}
 
+echo -n "" >STATUS_SUMMARY_${OS_TAG}
+
 for f in `ls *.[rR]` ; do
-    Rscript ${f} >${f}out 2>&1;
+    Rscript ${f} >${f}out_${OS_TAG} 2>&1;
     x=$?
     echo ${f} exit code $x ;
-    if [ 0 -eq $x ]  ; then  echo -n " passed." >${f}status  ; \
-	                else echo -n " failed." >${f}status  ;fi ;
+    if [ 0 -eq $x ]  ; \
+     then echo -n ${f}": passed." >>STATUS_SUMMARY_${OS_TAG}  ; \
+     else echo -n ${f}": failed." >>STATUS_SUMMARY_${OS_TAG}  ;fi ;
     done
 
-OS_TAG=`uname -i`_`uname -o`_`uname -r`
-OS_TAG=${OS_TAG////-}  # rm / from name for file
-
-
-egrep --with-filename '(passed|failed)' *status  >STATUS_SUMMARY_${OS_TAG}
-
-# more complicated senarios may need something like
-#egrep --with-filename '(passed|failed)' *status | perl -ane "print qq(@F[0,1]\n)" >STATUS_SUMMARY_${OS_TAG}
-# @echo " $(PAC)-$(PAC-VERSION) $(RVERSION) $(shell date) ON  $(shell uname --all)" >>$@.tmp 
+git config --global user.email "travis@travis-ci.org"
+git config --global user.name "Travis CI"
 
 git status
-git add   STATUS_SUMMARY_${OS_TAG}
+git add   *_${OS_TAG}
 git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
 git status
+
+git branch
+git branch -r
+
+# check if this echos token
+# git remote add STATUS_SUMMARY_${OS_TAG} https://${GH_TOKEN}@github.com/pdgilbert/2piQA.git
+# > /dev/null 2>&1
+# git push --quiet --set-upstream STATUS_SUMMARY_${OS_TAG} to??? 
+#    https://github.com/pdgilbert/2piQA.git
+#    git@github.com:pdgilbert/2piQA.git  
 
 exit 0
