@@ -44,14 +44,17 @@ git status
 git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
 git status
 
-git branch
-git branch -r
+# git branch
+# git branch -r
 
 # check if this echos token
 # git remote add STATUS_SUMMARY_${OS_TAG} https://${GH_TOKEN}@github.com/pdgilbert/2piQA.git
 # > /dev/null 2>&1
-# git push --quiet --set-upstream STATUS_SUMMARY_${OS_TAG} to??? 
+# git push --quiet --set-upstream 
 #    https://github.com/pdgilbert/2piQA.git
 #    git@github.com:pdgilbert/2piQA.git  
+
+git push --quiet
+git status
 
 exit 0
