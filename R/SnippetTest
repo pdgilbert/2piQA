@@ -41,8 +41,8 @@ for f in `ls *.[rR]` ; do
 git add   STATUS_SUMMARY_${OS_TAG}
 
 git status
-git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
-git status
+#git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
+#git status
 
 # git branch
 # git branch -r
@@ -54,7 +54,7 @@ git status
 #    https://github.com/pdgilbert/2piQA.git
 #    git@github.com:pdgilbert/2piQA.git  
 
-git push --quiet
-git status
+#git push --quiet
+#git status
 
 exit 0

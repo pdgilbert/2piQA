@@ -49,9 +49,17 @@ script:
 # for loop here is for case of changes in multiple snippet dirs
   - (cd R/ ; for f in $CHANGE ; do ./SnippetTest ${f} ; done )
 
-#after_success:
+after_success:
 #  - Rscript -e 'do something")'
   - (cd R/PkgSnippets/dse/1stSnippetTest ; date ; ls -l)
+
+deploy:
+  provider: pages
+  target_branch: gh-pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+  on:
+    branch: master
 
 # send e-mails on changes
 #notifications:
