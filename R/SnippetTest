@@ -38,8 +38,11 @@ for f in `ls *.[rR]` ; do
      else echo -n ${f}": failed." >>STATUS_SUMMARY_${OS_TAG}  ;fi ;
     done
 
+echo pre add
+git status
 git add   STATUS_SUMMARY_${OS_TAG}
 
+echo post add
 git status
 #git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
 #git status
