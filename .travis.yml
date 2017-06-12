@@ -10,7 +10,6 @@ sudo: false
 
 # trigger on pushes to master branch
 branches:
- - gh-pages
   only:
    - master
 
