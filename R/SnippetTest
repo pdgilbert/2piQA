@@ -40,21 +40,11 @@ for f in `ls *.[rR]` ; do
 
 git add   STATUS_SUMMARY_${OS_TAG}
 
-echo post add
 git status
 git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
-git status
-
-git branch
 
 git config --global push.default simple #to squelch warning message
-# check if this echos token
-# git remote add STATUS_SUMMARY_${OS_TAG} https://${GH_TOKEN}@github.com/pdgilbert/2piQA.git
-# > /dev/null 2>&1
-git push --quiet --set-upstream  https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git
-#    git@github.com:pdgilbert/2piQA.git  
 
-#git push 
-git status
+git push --quiet --set-upstream  https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git
 
 exit 0
