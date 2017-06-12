@@ -39,7 +39,11 @@ install:
 # run checks
 script:
   - git checkout -b gh-pages
+  - ls R/PkgSnippets/dse/1stSnippetTest/*
+  - git fetch origin    # so local has all changes previously made
+  - ls R/PkgSnippets/dse/1stSnippetTest/*
   - git rebase master   # so *.R script files are updated
+  - ls R/PkgSnippets/dse/1stSnippetTest/*
 #  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
 #  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
 #  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
