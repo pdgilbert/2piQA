@@ -55,6 +55,7 @@ after_success:
 # whole branch. That will not scale well when there are only changes to 
 # one snip, or a new package.
 # Consider switching branch and pushing inside script.
+# (probably use git rebase master gh-pages ?? )
 #deploy:
 #  provider: pages
 #  target_branch: gh-pages
