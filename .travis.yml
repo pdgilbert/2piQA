@@ -39,11 +39,12 @@ install:
 # run checks
 script:
   - git checkout -b gh-pages
-  - git rebase master gh-pages
+  - git rebase master   # so *.R script files are updated
 #  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
 #  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
 #  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
   - CHANGE=`git diff-tree --no-commit-id --name-only -r ${TRAVIS_COMMIT}`
+   - echo CHANGE would be  ${CHANGE}
   - CHANGE='R/PkgSnippets/dse/1stSnippetTest/fail1.R R/PkgSnippets/dse/2ndSnippetTest/SnippetDescription.txt'
 
 # for loop here is for case of changes in multiple snippet dirs

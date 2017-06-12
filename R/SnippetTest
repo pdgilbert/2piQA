@@ -24,8 +24,6 @@ echo OS_TAG is ${OS_TAG}
 # only run for snippet changes ( but should run for package version change and R version change )
 if [ ""${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
 
-#git rebase master gh-pages
-
 cd ${CHK}/${PKG}/${SNP}
 
 echo -n "" >STATUS_SUMMARY_${OS_TAG}
@@ -44,20 +42,18 @@ git add   STATUS_SUMMARY_${OS_TAG}
 
 echo post add
 git status
-#git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
-#git status
+git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
+git status
 
- git branch
- git branch --all
+git branch
 
 # check if this echos token
 # git remote add STATUS_SUMMARY_${OS_TAG} https://${GH_TOKEN}@github.com/pdgilbert/2piQA.git
 # > /dev/null 2>&1
-# git push --quiet --set-upstream 
-#    https://github.com/pdgilbert/2piQA.git
+git push --quiet --set-upstream  https://${GH_TOKEN}@github.com/pdgilbert/2piQA.git
 #    git@github.com:pdgilbert/2piQA.git  
 
-#git push --quiet
-#git status
+#git push 
+git status
 
 exit 0
