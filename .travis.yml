@@ -10,6 +10,7 @@ sudo: false
 
 # trigger on pushes to master branch
 branches:
+ - gh-pages
   only:
    - master
 
@@ -38,6 +39,7 @@ install:
 
 # run checks
 script:
+  - git rebase master gh-pages
 #  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
 #  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
 #  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}

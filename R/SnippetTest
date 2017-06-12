@@ -24,7 +24,7 @@ echo OS_TAG is ${OS_TAG}
 # only run for snippet changes ( but should run for package version change and R version change )
 if [ ""${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
 
-git rebase master gh-pages
+#git rebase master gh-pages
 
 cd ${CHK}/${PKG}/${SNP}
 
