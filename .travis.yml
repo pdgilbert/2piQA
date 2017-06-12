@@ -39,6 +39,7 @@ install:
 
 # run checks
 script:
+  - git checkout -b gh-pages
   - git rebase master gh-pages
 #  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
 #  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
