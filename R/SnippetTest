@@ -45,6 +45,7 @@ git commit  -m "Build of ${OS_TAG}. Travis build: ${TRAVIS_BUILD_NUMBER}"
 
 git config --global push.default simple #to squelch warning message
 
-git push --quiet --set-upstream  https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git
+#gitpush --quiet --set-upstream https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git
+git push https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git HEAD:master
 
 exit 0
