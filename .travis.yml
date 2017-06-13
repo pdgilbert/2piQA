@@ -38,12 +38,13 @@ install:
 
 # run checks
 script:
-  - git checkout  gh-pages
+  - git branch
+  - git branch -r
+#  - git checkout  gh-pages
   - ls R/PkgSnippets/dse/1stSnippetTest/*
 #  - git fetch origin    # so local has all changes previously made
 #  - ls R/PkgSnippets/dse/1stSnippetTest/*
-  - git rebase master   # so *.R script files are updated
-  - ls R/PkgSnippets/dse/1stSnippetTest/*
+#  - git rebase master   # so *.R script files are updated
 #  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
 #  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
 #  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
@@ -59,7 +60,7 @@ after_success:
   - (cd R/PkgSnippets/dse/1stSnippetTest ; date ; ls -l)
 
 # deploy works by saving everything (--force?), completely rewriting the
-# whole branch. That will not scale well when there are only changes to 
+# whole gh-pages branch. That will not scale well when there are only changes to 
 # one snip, or a new package.
 # Consider switching branch and pushing inside script.
 # (probably use git rebase master gh-pages ?? )

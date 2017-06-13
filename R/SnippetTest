@@ -41,7 +41,7 @@ for f in `ls *.[rR]` ; do
 git add   STATUS_SUMMARY_${OS_TAG}
 
 git status
-git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
+git commit  -m "Build of ${OS_TAG}. Travis build: ${TRAVIS_BUILD_NUMBER}"
 
 git config --global push.default simple #to squelch warning message
 
