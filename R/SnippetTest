@@ -24,6 +24,7 @@ if [ ""${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
 cd ${CHK}/${PKG}/${SNP}
 
 echo -n "" >STATUS_SUMMARY
+date >>STATUS_SUMMARY
 
 for f in `ls *.[rR]` ; do
     Rscript ${f} >${f}out 2>&1;
