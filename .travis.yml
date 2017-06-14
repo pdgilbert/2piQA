@@ -1,0 +1,86 @@
+# using suggestions from:
+#   github.com/jtilly/R-travis-container-example/blob/master/.travis.yml
+#   kieranhealy.org/blog/archives/2015/10/16/using-containerized-travis-ci-to-check-r-in-rmarkdown-files/
+#   gist.github.com/willprice/e07efd73fb7f13f917ea
+
+language: c
+
+# use containers (so no sudo)
+sudo: false
+
+# trigger on pushes to master branch
+branches:
+  only:
+   - master
+
+# really would prefer r lang pre-installed with all packages here
+# install R: use r-packages-precise (https://cran.r-project.org/bin/linux/ubuntu/precise/) 
+# as source which is white listed (https://github.com/travis-ci/apt-source-whitelist/)
+addons:
+  apt:
+    sources:
+    - r-packages-precise
+    packages:
+    - r-base-dev	
+    - r-recommended
+
+# cache local R libraries directory:
+cache:
+  directories:
+    - ~/Rlib
+
+# - install package with dependencies
+install:
+  - mkdir -p ~/Rlib
+  - echo 'R_LIBS=~/Rlib' > .Renviron
+  - echo 'options(repos = "http://cran.r-project.org")' > .Rprofile
+  - Rscript -e 'if(!"dse" %in% rownames(installed.packages())) { install.packages("dse", dependencies = TRUE) }'
+
+# run checks
+script:
+  - git branch
+  - git branch -r
+#  - git checkout  gh-pages
+  - ls R/PkgSnippets/dse/1stSnippetTest/*
+#  - git fetch origin    # so local has all changes previously made
+#  - ls R/PkgSnippets/dse/1stSnippetTest/*
+#  - git rebase master   # so *.R script files are updated
+#  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
+#  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
+#  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
+  - CHANGE=`git diff-tree --no-commit-id --name-only -r ${TRAVIS_COMMIT}`
+  - echo CHANGE would be  ${CHANGE}
+  - CHANGE='R/PkgSnippets/dse/1stSnippetTest/fail1.R R/PkgSnippets/dse/2ndSnippetTest/SnippetDescription.txt'
+  - OS_TAG=`uname -i`_`uname -o`
+  - OS_TAG=${OS_TAG////-}  # rm / from name for file
+  - git checkout  ${OS_TAG}
+  - git branch
+  - git branch -r
+  - ls R/PkgSnippets/dse/1stSnippetTest/*
+
+# for loop here is for case of changes in multiple snippet dirs
+  - (cd R/ ; for f in $CHANGE ; do ./SnippetTest ${f} ; done )
+
+after_success:
+#  - Rscript -e 'do something")'
+  - (cd R/PkgSnippets/dse/1stSnippetTest ; date ; ls -l)
+
+# deploy works by saving everything (--force?), completely rewriting the
+# whole gh-pages branch. That will not scale well when there are only changes to 
+# one snip, or a new package.
+# Consider switching branch and pushing inside script.
+# (probably use git rebase master gh-pages ?? )
+#deploy:
+#  provider: pages
+#  target_branch: gh-pages
+#  skip_cleanup: true
+#  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+##  local_dir: R 
+#  on:
+#    branch: master
+
+# send e-mails on changes
+#notifications:
+#  email:
+#    on_success: change
+#    on_failure: change

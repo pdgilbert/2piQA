@@ -1,0 +1,48 @@
+#!/bin/bash
+# run all tests in a pkg/snippet dir
+#  eg  (Beware this does a git commit)
+#     ./SnippetTest  R/PkgSnippets/dse/1stSnippetTest
+
+git config --global user.email "travis@travis-ci.org"
+git config --global user.name "Travis CI"
+
+#set -e to stop on error?
+
+CHK=$(echo $1 | cut -f2 -d/)
+PKG=$(echo $1 | cut -f3 -d/)
+SNP=$(echo $1 | cut -f4 -d/)
+
+# recording kernel with OS_TAG will eventually generate too many files, consider
+# echo -n `uname -r` >kernel_${OS_TAG}
+
+echo running SnippetTest for ${CHK}/${PKG}/${SNP} 
+echo OS_TAG is ${OS_TAG} 
+
+# only run for snippet changes ( but should run for package version change and R version change )
+if [ ""${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
+
+cd ${CHK}/${PKG}/${SNP}
+
+echo -n "" >STATUS_SUMMARY
+
+for f in `ls *.[rR]` ; do
+    Rscript ${f} >${f}out 2>&1;
+    x=$?
+    echo ${f} exit code $x ;
+    git add   ${f}out ;
+    if [ 0 -eq $x ]  ; \
+     then echo -n ${f}": passed." >>STATUS_SUMMARY  ; \
+     else echo -n ${f}": failed." >>STATUS_SUMMARY  ;fi ;
+    done
+
+git add   STATUS_SUMMARY
+
+git status
+git commit  -m "Build of ${OS_TAG}. Travis build: ${TRAVIS_BUILD_NUMBER}"
+
+git config --global push.default simple #to squelch warning message
+
+#gitpush --quiet --set-upstream https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git
+git push https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git HEAD:${OS_TAG}
+
+exit 0
