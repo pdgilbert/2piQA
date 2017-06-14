@@ -1,8 +1,0 @@
-Loading required package: dse
-Warning message:
-In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
-  there is no package called ‘dse’
-Error in find.package(package, lib.loc, verbose = verbose) : 
-  there is no package called ‘dse’
-Calls: data -> find.package
-Execution halted
