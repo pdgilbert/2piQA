@@ -58,7 +58,7 @@ script:
   - git config --global push.default simple #to squelch warning message
 #  - git fetch origin     # so local has all changes previously made
 #  - git rebase master   # so *.R snippet files are updated in branch
-  - git merge -s recursive -X theirs master  # updated branch snippet files (from master) 
+  - git merge -s recursive -X theirs master -m "updated snippet files (from master into branch)." 
   - ls R/PkgSnippets/dse/1stSnippetTest/*
 
 
