@@ -38,28 +38,37 @@ install:
 
 # run checks
 script:
-  - git branch
-  - git branch -r
-#  - git checkout  gh-pages
-  - ls R/PkgSnippets/dse/1stSnippetTest/*
-#  - git fetch origin    # so local has all changes previously made
-#  - ls R/PkgSnippets/dse/1stSnippetTest/*
-#  - git rebase master   # so *.R script files are updated
-#  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT}
-#  - echo TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
+#  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT} TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
 #  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
   - CHANGE=`git diff-tree --no-commit-id --name-only -r ${TRAVIS_COMMIT}`
   - echo CHANGE would be  ${CHANGE}
   - CHANGE='R/PkgSnippets/dse/1stSnippetTest/fail1.R R/PkgSnippets/dse/2ndSnippetTest/SnippetDescription.txt'
   - OS_TAG=`uname -i`_`uname -o`
   - OS_TAG=${OS_TAG////-}  # rm / from name for file
+  - cd ${HOME}/build/pdgilbert/
+#  - git clone --depth=10 --branch=${OS_TAG} https://${GITHUB_TOKEN}@github.com/pdgilbert
+#  only need ${OS_TAG} and master but ...
+  - git clone https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git  ${OS_TAG}
+  - cd ${OS_TAG}
   - git checkout  ${OS_TAG}
   - git branch
   - git branch -r
+  - git config --global user.email "travis@travis-ci.org"
+  - git config --global user.name "Travis CI"
+  - git config --global push.default simple #to squelch warning message
+#  - git fetch origin     # so local has all changes previously made
+#  - git rebase master   # so *.R snippet files are updated in branch
+  - git merge -s recursive -X theirs master -m "updated snippet files (from master into branch)." 
   - ls R/PkgSnippets/dse/1stSnippetTest/*
 
-# for loop here is for case of changes in multiple snippet dirs
+
+#  loop here is for case of changes in multiple snippet dirs
   - (cd R/ ; for f in $CHANGE ; do ./SnippetTest ${f} ; done )
+
+  - git push  origin HEAD:${OS_TAG}
+
+#  - git push --quiet --set-upstream
+#  - git push https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git HEAD:${OS_TAG}
 
 after_success:
 #  - Rscript -e 'do something")'

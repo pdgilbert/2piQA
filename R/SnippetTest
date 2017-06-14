@@ -13,7 +13,7 @@ PKG=$(echo $1 | cut -f3 -d/)
 SNP=$(echo $1 | cut -f4 -d/)
 
 # recording kernel with OS_TAG will eventually generate too many files, consider
-# echo -n `uname -r` >kernel_${OS_TAG}
+# echo -n `uname -r` >kernel_version
 
 echo running SnippetTest for ${CHK}/${PKG}/${SNP} 
 echo OS_TAG is ${OS_TAG} 
@@ -37,12 +37,9 @@ for f in `ls *.[rR]` ; do
 
 git add   STATUS_SUMMARY
 
+git branch
 git status
-git commit  -m "Build of ${OS_TAG}. Travis build: ${TRAVIS_BUILD_NUMBER}"
-
-git config --global push.default simple #to squelch warning message
-
-#gitpush --quiet --set-upstream https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git
-git push https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git HEAD:${OS_TAG}
+git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
+git status
 
 exit 0
