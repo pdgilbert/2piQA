@@ -38,6 +38,8 @@ install:
 
 # run checks
 script:
+  - pwd
+  - (cd ../ ; ls )
   - git branch
   - git branch -r
   - ls R/PkgSnippets/dse/1stSnippetTest/*
@@ -49,7 +51,9 @@ script:
   - OS_TAG=`uname -i`_`uname -o`
   - OS_TAG=${OS_TAG////-}  # rm / from name for file
 #  - git clone --depth=10 --branch=${OS_TAG} https://${GITHUB_TOKEN}@github.com/pdgilbert
-  - git clone https://${GITHUB_TOKEN}@github.com/pdgilbert
+  - git clone https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git pdgilbert/${OS_TAG}
+  - pwd
+  - (cd ../ ; ls )
   - git checkout  ${OS_TAG}
   - git branch
   - git branch -r
