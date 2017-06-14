@@ -51,6 +51,12 @@ script:
   - CHANGE=`git diff-tree --no-commit-id --name-only -r ${TRAVIS_COMMIT}`
   - echo CHANGE would be  ${CHANGE}
   - CHANGE='R/PkgSnippets/dse/1stSnippetTest/fail1.R R/PkgSnippets/dse/2ndSnippetTest/SnippetDescription.txt'
+  - OS_TAG=`uname -i`_`uname -o`
+  - OS_TAG=${OS_TAG////-}  # rm / from name for file
+  - git checkout  ${OS_TAG}
+  - git branch
+  - git branch -r
+  - ls R/PkgSnippets/dse/1stSnippetTest/*
 
 # for loop here is for case of changes in multiple snippet dirs
   - (cd R/ ; for f in $CHANGE ; do ./SnippetTest ${f} ; done )
