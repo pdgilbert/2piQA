@@ -58,11 +58,11 @@ script:
   - git config --global push.default simple #to squelch warning message
 #  - git fetch origin     # so local has all changes previously made
 #  - git rebase master   # so *.R snippet files are updated in branch
-  - git merge  master    # so *.R snippet files in master are updated in ${OS_TAG} branch
+  - git merge -s theirs master  # so *.R snippet files in master are updated in ${OS_TAG} 
   - ls R/PkgSnippets/dse/1stSnippetTest/*
 
 
-# for loop here is for case of changes in multiple snippet dirs
+#  loop here is for case of changes in multiple snippet dirs
   - (cd R/ ; for f in $CHANGE ; do ./SnippetTest ${f} ; done )
 
   - git push  origin HEAD:${OS_TAG}
