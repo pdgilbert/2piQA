@@ -38,9 +38,11 @@ install:
 
 # run checks
 script:
+  - echo ${HOME}
+  - whoami
+  - ls /home/travis/
   - pwd
   - ls 
-  - (cd ../ ; ls )
   - git branch
   - git branch -r
   - ls R/PkgSnippets/dse/1stSnippetTest/*
@@ -51,20 +53,25 @@ script:
   - CHANGE='R/PkgSnippets/dse/1stSnippetTest/fail1.R R/PkgSnippets/dse/2ndSnippetTest/SnippetDescription.txt'
   - OS_TAG=`uname -i`_`uname -o`
   - OS_TAG=${OS_TAG////-}  # rm / from name for file
-#  - git clone --depth=10 --branch=${OS_TAG} https://${GITHUB_TOKEN}@github.com/pdgilbert
   - cd
   - pwd
+  - cd /home/travis/build/pdgilbert/
+#  - git clone --depth=10 --branch=${OS_TAG} https://${GITHUB_TOKEN}@github.com/pdgilbert
+#  only need ${OS_TAG} and master but ...
   - git clone https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git  ${OS_TAG}
   - ls 
   - cd ${OS_TAG}
   - pwd
   - ls 
+  - git branch
+  - git branch -r
   - git checkout  ${OS_TAG}
   - git branch
   - git branch -r
-#  - git fetch origin    # so local has all changes previously made
-#  - git rebase master   # so *.R script files are updated
+  - git fetch origin    # so local has all changes previously made
+  - git rebase master   # so *.R script files are updated
   - ls R/PkgSnippets/dse/1stSnippetTest/*
+
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis CI"
   - git config --global push.default simple #to squelch warning message

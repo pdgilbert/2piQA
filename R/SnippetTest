@@ -37,7 +37,9 @@ for f in `ls *.[rR]` ; do
 
 git add   STATUS_SUMMARY
 
+git bramch
 git status
-git commit  -m "Build of ${OS_TAG}. Travis build: ${TRAVIS_BUILD_NUMBER}"
+git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
+git status
 
 exit 0
