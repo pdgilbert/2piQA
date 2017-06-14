@@ -56,8 +56,9 @@ script:
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis CI"
   - git config --global push.default simple #to squelch warning message
-  - git fetch origin    # so local has all changes previously made
-  - git rebase master   # so *.R script files are updated
+#  - git fetch origin     # so local has all changes previously made
+#  - git rebase master   # so *.R snippet files are updated in branch
+  - git merge  master    # so *.R snippet files in master are updated in ${OS_TAG} branch
   - ls R/PkgSnippets/dse/1stSnippetTest/*
 
 
@@ -65,6 +66,7 @@ script:
   - (cd R/ ; for f in $CHANGE ; do ./SnippetTest ${f} ; done )
 
   - git push  origin HEAD:${OS_TAG}
+
 #  - git push --quiet --set-upstream
 #  - git push https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git HEAD:${OS_TAG}
 
