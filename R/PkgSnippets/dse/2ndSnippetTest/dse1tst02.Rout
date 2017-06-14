@@ -9,7 +9,7 @@ In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = T
                                               version 
       "#201612020431 SMP Fri Dec 2 09:33:31 UTC 2016" 
                                              nodename 
-"testing-docker-eeef2716-e388-4675-b3e5-d78d809d6a88" 
+"testing-docker-d41dd4a6-692a-477b-8666-3e454bb9372c" 
                                               machine 
                                              "x86_64" 
                                                 login 
