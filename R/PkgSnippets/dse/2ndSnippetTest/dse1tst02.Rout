@@ -1,7 +1,13 @@
 Loading required package: dse
-Warning message:
-In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
-  there is no package called ‘dse’
+Loading required package: tfplot
+Loading required package: tframe
+
+Attaching package: ‘dse’
+
+The following objects are masked from ‘package:stats’:
+
+    acf, simulate
+
                                               sysname 
                                               "Linux" 
                                               release 
@@ -9,7 +15,7 @@ In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = T
                                               version 
       "#201612020431 SMP Fri Dec 2 09:33:31 UTC 2016" 
                                              nodename 
-"testing-docker-32aca5a2-b885-44bc-932f-cc28a8040039" 
+"testing-docker-483fa53f-fbdb-4995-8634-3e03276e7d2e" 
                                               machine 
                                              "x86_64" 
                                                 login 
@@ -18,5 +24,17 @@ In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = T
                                              "travis" 
                                        effective_user 
                                              "travis" 
-Error: could not find function "DSEversion"
-Execution halted
+     setRNG      tframe         dse 
+ "2013.9-1" "2015.12-1" "2015.12-1" 
+Warning message:
+In library() :
+  libraries ‘/usr/local/lib/R/site-library’, ‘/usr/lib/R/site-library’ contain no packages
+dse test 2 ...
+max. error  0dse test 3 ...
+max. error  0dse test 4 ...
+max. error  0dse test 5a...
+max. error  0dse test 5b...
+ok
+dse test 6a...
+max. error  3.996803e-15dse test 6b...
+max. error  0

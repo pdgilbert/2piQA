@@ -1,8 +1,13 @@
 Loading required package: dse
-Warning message:
-In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
-  there is no package called ‘dse’
-Error in find.package(package, lib.loc, verbose = verbose) : 
-  there is no package called ‘dse’
-Calls: data -> find.package
+Loading required package: tfplot
+Loading required package: tframe
+
+Attaching package: ‘dse’
+
+The following objects are masked from ‘package:stats’:
+
+    acf, simulate
+
+Error in random.number.test() : 
+  could not find function "random.number.test"
 Execution halted
