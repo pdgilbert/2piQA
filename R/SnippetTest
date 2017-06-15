@@ -14,6 +14,8 @@ echo running SnippetTest for ${CHK}/${PKG}/${SNP}
 # only run for snippet changes ( but should run for package version change and R version change )
 if [ ""${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
 
+Rscript -e 'if(!"${PKG}" %in% rownames(installed.packages())) { install.packages("${PKG}", dependencies = TRUE) }'
+
 cd ${CHK}/${PKG}/${SNP}
 
 echo -n "" >STATUS_SUMMARY
