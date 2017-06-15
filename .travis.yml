@@ -61,7 +61,7 @@ script:
   - echo ${TRAVIS_COMMIT}    >TRAVIS_COMMIT
   - echo ${TRAVIS_OS_NAME}   >TRAVIS_OS_NAME
   - echo ${TRAVIS_R_VERSION} >TRAVIS_R_VERSION
-  - git commit  -am "Record system info. Travis build: ${TRAVIS_BUILD_NUMBER}"
+  - git commit  -am 'Record system info. Travis build: ${TRAVIS_BUILD_NUMBER}'
 
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis CI"
