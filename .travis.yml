@@ -34,13 +34,14 @@ branches:
 
 # - install package with dependencies
 install:
+  - echo R_LIBS is ${R_LIBS}
+  - echo R_LIBS_SITE is ${R_LIBS_SITE}
   - echo R_LIB_USER is ${R_LIB_USER}
   - which R   #/home/travis/R-bin/bin/R
   - echo 'options(repos = "http://cran.r-project.org")' > .Rprofile
   - Rscript -e 'update.packages( ask=FALSE)'
-  - Rscript -e 'library()'
-  - cat .Rprofile
-  - ls ${HOME}/R/Library
+  - Rscript -e 'library() ; .libPaths()'
+#  - ls ${HOME}/R/Library
   - ls ${HOME}/R-bin/
 #  - ls ${HOME}/R-bin/library
 #  - ls ${HOME}/R-bin/site-library
