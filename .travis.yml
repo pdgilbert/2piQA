@@ -24,17 +24,18 @@ branches:
 # really would prefer r lang pre-installed with all packages here
 # install R: use r-packages-precise (https://cran.r-project.org/bin/linux/ubuntu/precise/) 
 # as source which is white listed (https://github.com/travis-ci/apt-source-whitelist/)
-addons:
-  apt:
-    sources:
-    - r-packages-precise
-    packages:
-    - r-base-dev	
-    - r-recommended
+#addons:
+#  apt:
+#    sources:
+#    - r-packages-precise
+#    packages:
+#    - r-base-dev	
+#    - r-recommended
 
 # - install package with dependencies
 install:
   - echo R_LIB_USER is ${R_LIB_USER}
+  - which R
   - ls ${HOME}/R/
   - ls ${HOME}/R/Library
   - ls ${HOME}/R-bin/lib/R/library
