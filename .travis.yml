@@ -7,7 +7,11 @@ language: r
 #r:
 #  - release
 #  - devel
-cache: packages
+
+cache:
+  directories:
+    - ${HOME}/R-bin/lib/R/library
+    - ${HOME}/R/Library
 
 # use containers (so no sudo)
 sudo: false
@@ -28,17 +32,16 @@ addons:
     - r-base-dev	
     - r-recommended
 
-# cache local R libraries directory:
-#cache:
-#  directories:
-#    - ~/Rlib
-
 # - install package with dependencies
 install:
-#  - mkdir -p ~/Rlib
-#  - echo 'R_LIBS=~/Rlib' > .Renviron
+  - echo R_LIB_USER is ${R_LIB_USER}
+  - ls ${HOME}/R/
+  - ls ${HOME}/R/Library
+  - ls ${HOME}/R-bin/lib/R/library
   - echo 'options(repos = "http://cran.r-project.org")' > .Rprofile
   - Rscript -e 'if(!"dse" %in% rownames(installed.packages())) { install.packages("dse", dependencies = TRUE) }'
+  - Rscript -e 'library()'
+  - cat .Rprofile
 
 # run checks
 script:
@@ -65,6 +68,9 @@ script:
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis CI"
   - git config --global push.default simple #to squelch warning message
+
+  - git add KERNEL_VERSION TRAVIS_COMMIT TRAVIS_OS_NAME TRAVIS_R_VERSION
+  - git commit -m "add records of system info."
 
 #  pull with rebase might be preferred here?
   - git merge -s recursive -X theirs master -m "updated snippet files (from master into branch)." 
