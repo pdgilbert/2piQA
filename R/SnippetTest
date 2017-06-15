@@ -3,20 +3,13 @@
 #  eg  (Beware this does a git commit)
 #     ./SnippetTest  R/PkgSnippets/dse/1stSnippetTest
 
-git config --global user.email "travis@travis-ci.org"
-git config --global user.name "Travis CI"
-
 #set -e to stop on error?
 
 CHK=$(echo $1 | cut -f2 -d/)
 PKG=$(echo $1 | cut -f3 -d/)
 SNP=$(echo $1 | cut -f4 -d/)
 
-# recording kernel with OS_TAG will eventually generate too many files, consider
-# echo -n `uname -r` >kernel_version
-
 echo running SnippetTest for ${CHK}/${PKG}/${SNP} 
-echo OS_TAG is ${OS_TAG} 
 
 # only run for snippet changes ( but should run for package version change and R version change )
 if [ ""${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
@@ -24,6 +17,11 @@ if [ ""${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
 cd ${CHK}/${PKG}/${SNP}
 
 echo -n "" >STATUS_SUMMARY
+
+#Adding date here means the file is always updated when the snippet tests are run, 
+#  so travis build number is recorded in git commit comment.
+#  Other files are built but if there are no changes then not committed.
+
 date >>STATUS_SUMMARY
 
 for f in `ls *.[rR]` ; do
@@ -41,6 +39,5 @@ git add   STATUS_SUMMARY
 git branch
 git status
 git commit  -m "Travis build: ${TRAVIS_BUILD_NUMBER}"
-git status
 
 exit 0
