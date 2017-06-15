@@ -35,10 +35,12 @@ branches:
 # - install package with dependencies
 install:
   - echo R_LIB_USER is ${R_LIB_USER}
-  - which R
-  - ls ${HOME}/R/
   - ls ${HOME}/R/Library
-  - ls ${HOME}/R-bin/lib/R/library
+  - which R   #/home/travis/R-bin/bin/R
+  - ls ${HOME}/R-bin/
+  - ls ${HOME}/R-bin/library
+  - ls ${HOME}/R-bin/site-library
+  - ls ${HOME}/R-bin/lib
   - echo 'options(repos = "http://cran.r-project.org")' > .Rprofile
   - Rscript -e 'if(!"dse" %in% rownames(installed.packages())) { install.packages("dse", dependencies = TRUE) }'
   - Rscript -e 'library()'
