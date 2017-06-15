@@ -37,7 +37,7 @@ install:
   - echo R_LIB_USER is ${R_LIB_USER}
   - which R   #/home/travis/R-bin/bin/R
   - echo 'options(repos = "http://cran.r-project.org")' > .Rprofile
-  - Rscript -e 'if(!"dse" %in% rownames(installed.packages())) { install.packages("dse", dependencies = TRUE) }'
+  - Rscript -e 'update.packages( ask=FALSE)'
   - Rscript -e 'library()'
   - cat .Rprofile
   - ls ${HOME}/R/Library
