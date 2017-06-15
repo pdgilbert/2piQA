@@ -3,7 +3,11 @@
 #   kieranhealy.org/blog/archives/2015/10/16/using-containerized-travis-ci-to-check-r-in-rmarkdown-files/
 #   gist.github.com/willprice/e07efd73fb7f13f917ea
 
-language: c
+language: r
+#r:
+#  - release
+#  - devel
+cache: packages
 
 # use containers (so no sudo)
 sudo: false
@@ -25,27 +29,19 @@ addons:
     - r-recommended
 
 # cache local R libraries directory:
-cache:
-  directories:
-    - ~/Rlib
+#cache:
+#  directories:
+#    - ~/Rlib
 
 # - install package with dependencies
 install:
-  - mkdir -p ~/Rlib
-  - echo 'R_LIBS=~/Rlib' > .Renviron
+#  - mkdir -p ~/Rlib
+#  - echo 'R_LIBS=~/Rlib' > .Renviron
   - echo 'options(repos = "http://cran.r-project.org")' > .Rprofile
   - Rscript -e 'if(!"dse" %in% rownames(installed.packages())) { install.packages("dse", dependencies = TRUE) }'
 
 # run checks
 script:
-#  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT} TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
-#  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
-# recording kernel with OS_TAG will eventually generate too many files, consider
-# echo -n `uname -r` >kernel_version
-
-  - CHANGE=`git diff-tree --no-commit-id --name-only -r ${TRAVIS_COMMIT}`
-  - echo CHANGE would be  ${CHANGE}
-  - CHANGE='R/PkgSnippets/dse/1stSnippetTest/fail1.R R/PkgSnippets/dse/2ndSnippetTest/SnippetDescription.txt'
   - OS_TAG=`uname -i`_`uname -o`
   - OS_TAG=${OS_TAG////-}  # rm / from name for file
 
@@ -57,7 +53,14 @@ script:
   - cd ${OS_TAG}
   - git checkout  ${OS_TAG}
 
-  - git diff-tree --no-commit-id --name-only -r ${TRAVIS_COMMIT}
+  - CHANGE=`git diff-tree --no-commit-id --name-only -r ${TRAVIS_COMMIT}`
+  - echo CHANGE would be  ${CHANGE}
+  - CHANGE='R/PkgSnippets/dse/1stSnippetTest/fail1.R R/PkgSnippets/dse/2ndSnippetTest/SnippetDescription.txt'
+
+  - uname -rio               >KERNEL_VERSION
+  - echo ${TRAVIS_COMMIT}    >TRAVIS_COMMIT
+  - echo ${TRAVIS_OS_NAME}   >TRAVIS_OS_NAME
+  - echo ${TRAVIS_R_VERSION} >TRAVIS_R_VERSION
 
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis CI"
