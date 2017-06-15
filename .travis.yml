@@ -36,13 +36,14 @@ addons:
 # - install package with dependencies
 install:
   - echo R_LIB_USER is ${R_LIB_USER}
+  - ls ${HOME}/R/
   - ls ${HOME}/R/Library
-  - cat .Renviron
-  - cat .Rprofile
 #  - mkdir -p ~/Rlib
 #  - echo 'R_LIBS=~/Rlib' > .Renviron
   - echo 'options(repos = "http://cran.r-project.org")' > .Rprofile
   - Rscript -e 'if(!"dse" %in% rownames(installed.packages())) { install.packages("dse", dependencies = TRUE) }'
+  - Rscript -e 'library()'
+  - cat .Rprofile
 
 # run checks
 script:
