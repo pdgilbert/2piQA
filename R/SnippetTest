@@ -15,7 +15,7 @@ echo running SnippetTest for ${CHK}/${PKG}/${SNP}
 if [ ""${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
 
 # install ${PKG} if it is not installed
-PKGX="tfplot"
+PKGX="EvalEst"
 Rscript -e 'if( !"'${PKGX}'" %in% rownames(installed.packages())) { install.packages("'${PKGX}'" , dependencies = TRUE) }'
 
 cd ${CHK}/${PKG}/${SNP}
