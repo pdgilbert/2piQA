@@ -7,8 +7,8 @@ language: r
 #r:
 #  - release
 #  - devel
+cache: packages
 cache:
-  -  packages
   directories:
     - ${HOME}/R-bin/lib/R/library
 
