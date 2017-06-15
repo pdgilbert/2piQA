@@ -40,6 +40,9 @@ install:
 script:
 #  - echo TRAVIS_COMMIT is ${TRAVIS_COMMIT} TRAVIS_OS_NAME is ${TRAVIS_OS_NAME}
 #  - echo TRAVIS_R_VERSION is ${TRAVIS_R_VERSION}
+# recording kernel with OS_TAG will eventually generate too many files, consider
+# echo -n `uname -r` >kernel_version
+
   - CHANGE=`git diff-tree --no-commit-id --name-only -r ${TRAVIS_COMMIT}`
   - echo CHANGE would be  ${CHANGE}
   - CHANGE='R/PkgSnippets/dse/1stSnippetTest/fail1.R R/PkgSnippets/dse/2ndSnippetTest/SnippetDescription.txt'
@@ -53,6 +56,9 @@ script:
   - git clone https://${GITHUB_TOKEN}@github.com/pdgilbert/2piQA.git  ${OS_TAG}
   - cd ${OS_TAG}
   - git checkout  ${OS_TAG}
+
+  - git diff-tree --no-commit-id --name-only -r ${TRAVIS_COMMIT}
+
   - git config --global user.email "travis@travis-ci.org"
   - git config --global user.name "Travis CI"
   - git config --global push.default simple #to squelch warning message
@@ -63,26 +69,10 @@ script:
 #  loop is for case of changes in multiple snippet dirs
   - (cd R/ ; for f in $CHANGE ; do ./SnippetTest ${f} ; done )
 
-  - git push # origin HEAD:${OS_TAG}
-#  - git push --quiet --set-upstream
 
 after_success:
-#  - Rscript -e 'do something")'
-  - (cd R/PkgSnippets/dse/1stSnippetTest ; date ; ls -l)
-
-# deploy works by saving everything (--force?), completely rewriting the
-# whole gh-pages branch. That will not scale well when there are only changes to 
-# one snip, or a new package.
-# Consider switching branch and pushing inside script.
-# (probably use git rebase master gh-pages ?? )
-#deploy:
-#  provider: pages
-#  target_branch: gh-pages
-#  skip_cleanup: true
-#  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-##  local_dir: R 
-#  on:
-#    branch: master
+  - git push # origin HEAD:${OS_TAG}
+#  - git push --quiet --set-upstream
 
 # send e-mails on changes
 #notifications:
