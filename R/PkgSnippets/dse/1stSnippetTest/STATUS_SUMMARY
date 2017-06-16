@@ -2,3 +2,4 @@ fails1.R: failed. Fri Jun 16 03:12:22 UTC 2017
 fails2.R: failed. Fri Jun 16 03:12:23 UTC 2017
 fails3.R: failed. Fri Jun 16 03:12:23 UTC 2017
 passes1.R: passed. Fri Jun 16 03:12:23 UTC 2017
+fail1.R: failed. Fri Jun 16 03:22:17 UTC 2017
