@@ -30,7 +30,6 @@ cd ${CHK}/${PKG}/${SNP}
 if [ -e STATUS_SUMMARY ]  ; \
  then grep -v ${f}  STATUS_SUMMARY >zz.txt ; mv zz.txt STATUS_SUMMARY ; \
  else echo -n "" >STATUS_SUMMARY  ;fi ;
-done
 
 #Adding date here means the file is always updated when the snippet test is run, 
 #  so last travis build number is recorded in git commit comment.
