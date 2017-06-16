@@ -82,7 +82,7 @@ script:
   - git merge -s recursive -X theirs master -m "updated snippet files (from master into branch)." 
 
 #  loop is for case of changes in multiple snippet dirs
-  - (cd R/ ; for f in $CHANGE ; do ./SnippetTests ${f} ; done )
+  - (cd R/ ; for f in $CHANGE ; do ./SnippetTestFile ${f} ; done )
 
 
 after_success:
