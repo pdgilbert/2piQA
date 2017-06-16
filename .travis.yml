@@ -40,7 +40,7 @@ install:
   - which R   #/home/travis/R-bin/bin/R
   - echo 'options(repos = "http://cran.r-project.org")' > .Rprofile
   - Rscript -e 'update.packages( ask=FALSE)'
-  - Rscript -e 'library() ; .libPaths() ; Sys.getEnv("R_HOME")'
+  - Rscript -e 'library() ; .libPaths() '
   - Rscript -e 'Sys.getenv(c("R_HOME","R_LIBS" ,"R_LIBS_USER","R_LIBS_SITE"))'
 #  - ls ${HOME}/R/Library
   - ls ${HOME}/R-bin/
