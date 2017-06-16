@@ -1,33 +1,41 @@
 #!/bin/bash
-# run all tests in a pkg/snippet dir
+# run a test in a pkg/snippet dir
 #  eg  (Beware this does a git commit)
-#     ./SnippetTests  R/PkgSnippets/dse/1stSnippetTest
+#     ./SnippetTestFile  R/PkgSnippets/dse/1stSnippetTest/fails1.R
 
-# see SnippetTestFile to run one test file in a dir
+# see SnippetTests to run all tests in a dir
+
+# run for file changes (run SnippetTests for package version change and R version change)
 
 #set -e to stop on error?
 
 CHK=$(echo $1 | cut -f2 -d/)
 PKG=$(echo $1 | cut -f3 -d/)
 SNP=$(echo $1 | cut -f4 -d/)
+f=$(echo $1 | cut -f5 -d/)
 
-echo running SnippetTests for ${CHK}/${PKG}/${SNP} 
+echo running SnippetTestFile for ${CHK}/${PKG}/${SNP}/${f} 
 
-# only run for snippet changes ( but should run for package version change and R version change )
+# skip if this is not a snippet file
 if [ ""${CHK} != "PkgSnippets" ] ; then exit 0 ; fi
+
+# skip if changed files do not end in .r or .R
+if [[ ${f} != *".r" && ${f} != *".R" ]]; then  exit 0  ; fi
 
 # install ${PKG} if it is not installed
 Rscript -e 'if( !"'${PKG}'" %in% rownames(installed.packages())) { install.packages("'${PKG}'" , dependencies = TRUE) }'
 
 cd ${CHK}/${PKG}/${SNP}
 
-echo -n "" >STATUS_SUMMARY
+if [ -e STATUS_SUMMARY ]  ; \
+ then grep -v ${f}  STATUS_SUMMARY >zz.txt ; mv zz.txt STATUS_SUMMARY ; \
+ else echo -n "" >STATUS_SUMMARY  ;fi ;
+done
 
-#Adding date here means the file is always updated when the snippet tests are run, 
-#  so travis build number is recorded in git commit comment.
+#Adding date here means the file is always updated when the snippet test is run, 
+#  so last travis build number is recorded in git commit comment.
 #  Other files are built but if there are no changes then not committed.
 
-for f in `ls *.[rR]` ; do
     Rscript ${f} >${f}out 2>&1;
     x=$?
     echo ${f} exit code $x ;
@@ -35,7 +43,6 @@ for f in `ls *.[rR]` ; do
     if [ 0 -eq $x ]  ; \
      then echo  ${f}": passed." `date` >>STATUS_SUMMARY  ; \
      else echo  ${f}": failed." `date` >>STATUS_SUMMARY  ;fi ;
-    done
 
 git add   STATUS_SUMMARY
 
