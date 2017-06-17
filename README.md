@@ -1,2 +1,2 @@
 # 2piQA
-Framework for package testing.
+Github web site for R framework for package testing.
