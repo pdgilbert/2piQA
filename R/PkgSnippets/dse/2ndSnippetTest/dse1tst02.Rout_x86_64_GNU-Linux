@@ -1,0 +1,22 @@
+Loading required package: dse
+Warning message:
+In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+  there is no package called ‘dse’
+                                              sysname 
+                                              "Linux" 
+                                              release 
+                              "4.8.12-040812-generic" 
+                                              version 
+      "#201612020431 SMP Fri Dec 2 09:33:31 UTC 2016" 
+                                             nodename 
+"testing-docker-d2437d68-482f-4c67-bd99-33411956d44f" 
+                                              machine 
+                                             "x86_64" 
+                                                login 
+                                            "unknown" 
+                                                 user 
+                                             "travis" 
+                                       effective_user 
+                                             "travis" 
+Error: could not find function "DSEversion"
+Execution halted
